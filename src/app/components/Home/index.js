@@ -8,6 +8,7 @@ export default ({ Navigate }) => (
     <div className="home-thumbnails">
       {SampleViewList.map((sampleView, i) => (
         <div
+          key={sampleView.name}
           role="button"
           tabIndex={0}
           onKeyDown={null}

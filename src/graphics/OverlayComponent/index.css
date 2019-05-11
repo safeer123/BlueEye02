@@ -1,0 +1,82 @@
+.main-content .loader {
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    font-size: 18px;
+    letter-spacing: 2;
+    font-weight: bold;
+    color: #666;
+    z-index: 2;
+    opacity: 1;
+}
+
+.main-content .overlay-layer {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    z-index: 5;
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+}
+
+.loader .fa-spinner {
+    font-size: 50px;
+    color: #CCC;
+}
+
+.overlay-layer .speak-btn {
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    font-size: 25px;
+    z-index: 10;
+    background-color: rgba(1, 1, 1, 0.2);
+    padding: 10px 10px;
+    border-radius: 30px;
+    pointer-events: visiblefill;
+    cursor: pointer;
+}
+
+.speak-btn .icon-neutral {
+    color: #CCC;
+}
+
+.speak-btn .icon-red {
+    color: #FAA;
+}
+
+.speak-btn .icon-green {
+    color: #AFA;
+}
+
+.overlay-layer .hide-layer-btn {
+    font-size: 25px;
+    z-index: 10;
+    background-color: rgba(1, 1, 1, 0.2);
+    padding: 10px 10px;
+    border-radius: 30px;
+    width: fit-content;
+    width: -moz-fit-content;
+    margin: 10px auto;
+    pointer-events: visiblefill;
+    cursor: pointer;
+}
+
+.hide-layer-btn .visibility-icon {
+    color: #0100f6;
+}
+
+.overlay-layer .hidden {
+    opacity: 0;
+}
+
+.overlay-layer .back-home {
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+    font-size: 25px;
+    pointer-events: all;
+    z-index: 10;
+}

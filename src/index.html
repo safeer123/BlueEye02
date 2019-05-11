@@ -1,0 +1,237 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueEye 02</title>
+    <link rel="shortcut icon" type="image/x-icon" href="">
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script id="shader-f-multilight-3d" type="x-shader/x-fragment">
+        precision mediump float;
+        #define MAX_LIGHTS 10
+
+        struct PointLight {
+            vec3 lightColor;
+            vec3 lightPositionInWorld;
+        };
+        
+        // Passed in from the vertex shader.
+        varying vec3 v_surfacePosition;
+        varying vec3 v_normal;
+        varying vec4 v_color;
+
+        // all lights
+        uniform PointLight u_Lights[MAX_LIGHTS];
+        
+        // surface to sun vector
+        uniform vec3 u_sunDirection;
+        uniform vec3 u_sunLightColor;
+
+        // material properties
+        uniform vec3 u_emissiveColor;
+        uniform float u_Ka; // ambient coefficient
+        uniform float u_Kd; // diffuse coefficient
+        uniform float u_Ks; // specular coefficient
+        
+        void main() {
+          vec3 surfaceColor = vec3(0.0, 0.0, 0.0);
+          vec3 objectColor = v_color.rgb;
+          vec3 normal = normalize(v_normal);
+
+          // emissive Term
+          surfaceColor += u_emissiveColor;
+        
+          // Contribution of sunlight (directional)
+          // sun: ambient term
+          surfaceColor += u_Ka * u_sunLightColor * objectColor;
+
+          // sun: diffuse term
+          float I_sunlight = max( 0.0, dot(normal, u_sunDirection) );
+          surfaceColor += I_sunlight * u_Kd * u_sunLightColor * objectColor;
+
+          // Contribution of point lights
+          for(int k=0; k<MAX_LIGHTS; k++) {
+              // ambient term
+              surfaceColor += u_Ka * u_Lights[k].lightColor * objectColor;
+
+              // attenuation factor
+              float lightRadius = 50.0;
+              float quadCoeff = 1.0 / (lightRadius * lightRadius);
+              float linearCoeff = 2.0 / lightRadius;
+              float dist = length(u_Lights[k].lightPositionInWorld - v_surfacePosition);
+              float attenuationFactor = 1.0 / (1.0 + linearCoeff * dist + quadCoeff * dist * dist);
+
+              // diffuse term
+              vec3 surfaceToLight = normalize(u_Lights[k].lightPositionInWorld - v_surfacePosition);
+              float I_diffuse = max(0.0, dot(normal, surfaceToLight));
+              surfaceColor += attenuationFactor * I_diffuse * u_Kd * u_Lights[k].lightColor * objectColor;
+
+              if(I_diffuse > 0.0) {
+                  // specular term
+              }
+          }
+        
+          gl_FragColor = vec4(surfaceColor, v_color.a);
+        }
+</script>
+
+<script id="shader-v-multilight-3d" type="x-shader/x-vertex">
+        attribute vec3 a_position;
+        attribute vec4 a_color;
+        attribute vec3 a_normal;
+        
+        uniform mat4 u_world;
+        uniform mat4 u_viewProjection;
+        uniform mat4 u_worldInverseTranspose;
+        
+        varying vec3 v_surfacePosition;
+        varying vec4 v_color;
+        varying vec3 v_normal;
+        
+        void main() {
+          // Multiply the position by the matrix.
+          gl_Position = u_viewProjection * u_world * vec4(a_position, 1);
+        
+          // orient the normals and pass to the fragment shader
+          v_normal = mat3(u_worldInverseTranspose) * a_normal;
+
+          v_color = a_color;
+
+          vec4 worldSurfacePosVec4 = u_world * vec4(a_position, 1);
+          v_surfacePosition = worldSurfacePosVec4.xyz;
+        }
+</script>
+
+<script id="shader-f-light-3d" type="x-shader/x-fragment">
+        precision mediump float;
+        
+        // Passed in from the vertex shader.
+        varying vec3 v_normal;
+        varying vec4 v_color;
+        
+        uniform vec3 u_reverseLightDirection;
+        
+        void main() {
+          // because v_normal is a varying it's interpolated
+          // we it will not be a uint vector. Normalizing it
+          // will make it a unit vector again
+          vec3 normal = normalize(v_normal);
+        
+          float light = max( 0.0, dot(normal, u_reverseLightDirection) );
+        
+          gl_FragColor = vec4(v_color.rgb * (light + 0.2), 1);
+        }
+</script>
+
+<script id="shader-v-light-3d" type="x-shader/x-vertex">
+        attribute vec3 a_position;
+        attribute vec4 a_color;
+        attribute vec3 a_normal;
+        
+        uniform mat4 u_worldViewProjection;
+        uniform mat4 u_worldInverseTranspose;
+        
+        varying vec4 v_color;
+        varying vec3 v_normal;
+        
+        void main() {
+          // Multiply the position by the matrix.
+          gl_Position = u_worldViewProjection * vec4(a_position, 1);
+        
+          // orient the normals and pass to the fragment shader
+          v_normal = mat3(u_worldInverseTranspose) * a_normal;
+
+          v_color = a_color;
+        }
+</script>
+
+<script id="shader-fcol3d" type="x-shader/x-fragment"> 
+    precision mediump float;
+    varying vec4 v_color;
+
+    void main() {
+        gl_FragColor = v_color;
+    }
+</script>
+
+<script id="shader-vcol3d" type="x-shader/x-vertex"> 
+    attribute vec3 a_position;
+    attribute vec4 a_color;
+    uniform mat4 u_worldViewProjection;
+    varying vec4 v_color;
+    
+    void main() {
+        gl_Position = u_worldViewProjection * vec4(a_position, 1);
+        v_color = a_color;
+    }
+</script>
+
+
+<script id="shader-fcol2d" type="x-shader/x-fragment"> 
+      precision mediump float;
+      uniform vec4 u_color;
+      varying vec4 v_color;
+
+      void main() {
+          gl_FragColor = v_color + u_color;
+      }
+</script>
+
+<script id="shader-vcol2d" type="x-shader/x-vertex"> 
+      attribute vec2 a_position;
+      attribute vec4 a_color;
+      uniform vec2 u_resolution;
+      uniform mat3 u_matrix;
+      varying vec4 v_color;
+      
+      void main() {
+          // Multiply the position by the matrix.
+          vec2 position = (u_matrix * vec3(a_position, 1)).xy;
+          vec2 zeroToOne = position / u_resolution;
+          vec2 zeroToTwo = zeroToOne * 2.0;
+          vec2 clipspace = zeroToTwo - 1.0;
+          gl_Position = vec4(clipspace* vec2(1, -1), 0.9999, 1);
+          v_color = a_color;
+      }
+</script>
+
+
+
+<script id="shader-ftex" type="x-shader/x-fragment"> 
+      precision mediump float;
+      varying vec2 v_texCoord;
+      uniform sampler2D u_texture;
+
+      void main() {
+          gl_FragColor = texture2D(u_texture, v_texCoord);
+      }
+</script> 
+
+<script id="shader-vtex" type="x-shader/x-vertex"> 
+      attribute vec2 a_position;
+      uniform vec2 u_resolution;
+      uniform mat3 u_matrix;
+
+      attribute vec2 a_texCoord;
+      varying vec2 v_texCoord;
+      
+      void main() {
+          // Multiply the position by the matrix.
+          vec2 position = (u_matrix * vec3(a_position, 1)).xy;
+          vec2 zeroToOne = position / u_resolution;
+          vec2 zeroToTwo = zeroToOne * 2.0;
+          vec2 clipspace = zeroToTwo - 1.0;
+          gl_Position = vec4(clipspace* vec2(1, -1), 0, 1);
+
+          v_texCoord = a_texCoord;
+      }
+</script>
+  
+</body>
+
+</html>

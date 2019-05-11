@@ -1,0 +1,40 @@
+.home-wrapper {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    background: rgb(65, 118, 130);
+    background: linear-gradient(315deg, rgb(65, 118, 130) 0%, rgba(24,24,92,1) 50%, rgba(0,120,144,1) 93%);
+}
+
+.home-thumbnails {
+    margin: 5%;
+    width: 90%;
+    height: 78%;
+    background-color: rgb(93, 116, 126);
+    border: 1px solid rgb(112, 112, 112);
+    padding: 20px;
+    box-sizing: border-box;
+    -webkit-box-shadow: -2px 3px 40px 12px rgba(0,0,0,0.55);
+    -moz-box-shadow: -2px 3px 40px 12px rgba(0,0,0,0.55);
+    box-shadow: -2px 3px 40px 12px rgba(0,0,0,0.55);
+}
+
+.home-thumbnails .home-thumbnail {
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px 25px;
+    margin: 10px;
+    background-color: rgb(130, 152, 161);
+    border: 1px solid #bdbdbd;
+    border-radius: 10px;
+    user-select: none;
+    max-width: 250px;
+    height: 210px;
+    vertical-align: top;
+}
+
+.home-thumbnails .home-thumbnail:hover {
+    background-color: rgb(159, 174, 180);
+}

@@ -1,0 +1,22 @@
+.custom-popover {
+    font-size: 14px;
+    line-height: 1.0;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #BBB;
+    border-radius: 10px;
+    z-index: 20;
+    pointer-events: none;
+    padding: 17px 15px 10px 15px;
+    max-width: 40%;
+    word-wrap: break-word;
+    letter-spacing: 1px;
+}
+
+.custom-popover .title {
+    font-style: italic;
+}
+
+.custom-popover .title hr {
+    margin: 3px 0px 7px 0px;
+    border-top: 1px dashed #555;
+}

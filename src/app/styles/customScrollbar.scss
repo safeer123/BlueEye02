@@ -1,0 +1,112 @@
+//Light Theme
+$scrollThumbColor-Light: #CCCCCC;
+$scrollBGColor-Light: #f7f7f7;
+$scrollBorderColor-Light: #f1f1f1;
+
+//Dark Theme
+$scrollThumbColor-Dark: #52595F;
+$scrollBGColor-Dark: #2C353E;
+$scrollBorderColor-Dark: #111622 ;
+
+
+$ag-mat-icons-path: "~ag-grid-community/src/styles/ag-theme-material/icons/";
+
+#appContainer {
+    ul,
+    .select__menu-list,
+    .ag-body-horizontal-scroll-viewport,
+    .ag-body-viewport,
+    div[class*="MuiPickersYearSelection-container"]{
+        &::-webkit-scrollbar{
+            width: 17px;
+        }
+        &::-webkit-scrollbar-button:single-button:vertical:decrement {
+            background-image:url($ag-mat-icons-path+"small-up.svg");
+            background-position: top center;
+        }
+        &::-webkit-scrollbar-button:single-button:vertical:increment {
+            background-image:url($ag-mat-icons-path+"small-down.svg");
+            background-position:center;
+        }
+        &::-webkit-scrollbar-button:single-button:increment {
+            background-image:url($ag-mat-icons-path+"small-right.svg");
+        }
+        &::-webkit-scrollbar-button:single-button:decrement {
+            background-image:url($ag-mat-icons-path+"small-left.svg");
+        }
+        &::-webkit-scrollbar-corner{
+            background-color: transparent;
+        }
+        &::-webkit-scrollbar-thumb:horizontal,&::-webkit-scrollbar-thumb:vertical{
+            border-radius: 0;
+        }
+    }
+}
+
+#appContainer.darkTheme {
+    ul,
+    .select__menu-list,
+    .ag-body-horizontal-scroll-viewport,
+    .ag-body-viewport,
+    div[class*="MuiPickersYearSelection-container"]{
+        &::-webkit-scrollbar{
+            background-color: $scrollBGColor-Dark;
+            border:1px solid $scrollBorderColor-Dark;
+        }
+        &::-webkit-scrollbar-thumb:horizontal{
+            background-color: $scrollThumbColor-Dark;
+            border-left: 2px solid $scrollBGColor-Dark;
+            border-right: 2px solid $scrollBGColor-Dark;
+
+        }
+        &::-webkit-scrollbar-thumb:vertical{
+            background-color: $scrollThumbColor-Dark;
+            border-top: 2px solid $scrollBGColor-Dark;
+            border-bottom: 2px solid $scrollBGColor-Dark;
+        }
+        &::-webkit-scrollbar-button:single-button {
+            background-color: $scrollThumbColor-Dark;
+            background-size: cover;
+        }
+    }
+
+    .ag-floating-top::-webkit-scrollbar{
+        background-color: transparent;
+        border-left:1px solid $scrollBorderColor-Dark;
+        border-right:1px solid $scrollBorderColor-Dark;
+    }
+}
+
+
+#appContainer.lightTheme {
+    ul,
+    .select__menu-list,
+    .ag-body-horizontal-scroll-viewport,
+    .ag-body-viewport,
+    div[class*="MuiPickersYearSelection-container"]{
+        &::-webkit-scrollbar{
+            background-color: $scrollBGColor-Light;
+            border:1px solid $scrollBorderColor-Light;
+        }
+        &::-webkit-scrollbar-thumb:horizontal{
+            background-color: $scrollThumbColor-Light;
+            border-left: 2px solid $scrollBGColor-Light;
+            border-right: 2px solid $scrollBGColor-Light;
+        }
+        &::-webkit-scrollbar-thumb:vertical{
+            background-color: $scrollThumbColor-Light;
+            border-top: 2px solid $scrollBGColor-Light;
+            border-bottom: 2px solid $scrollBGColor-Light;
+        }
+        &::-webkit-scrollbar-button:single-button {
+            background-color: $scrollThumbColor-Light;
+            background-size: cover;
+        }
+    }
+
+    .ag-floating-top::-webkit-scrollbar{
+        background-color: transparent;
+        border-left:1px solid $scrollBorderColor-Light;
+        border-right:1px solid $scrollBorderColor-Light;
+    }
+}

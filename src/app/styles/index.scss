@@ -1,0 +1,305 @@
+html *
+{
+    font-family: Open Sans !important;
+}
+body{
+    margin: 0px;
+}
+#root {
+    height: 100%;
+    width: 100%;
+}
+#appContainer{
+   height: 100%;
+}
+.goldenLayout{
+    margin: 10px;
+   height: calc(100% - 66px); //where App bar height is 46px + margin 10px;
+   .lm_controls{
+        margin-top: 6;
+   }
+   .lm_header{
+    z-index: 21;
+   }
+}
+
+.lm_goldenlayout{
+    background: inherit! important;
+}
+.lm_item.lm_stack{
+    box-shadow: 0 0px 2px 0 rgba(0,0,0,0.15);
+    border-radius:4px;
+}
+.lm_header{
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    .lm_tab.lm_active{
+        background: inherit;
+        box-shadow: none!important;
+        border: 0px;
+        font-size: 14px;
+    }
+    .lm_tab{
+        padding: 10px 10px 5px!important;
+        font-weight: 600;
+    }
+    .gridHead{
+        float: left;
+        .glHeaderIcon{
+            padding: 10px 10px 5px!important;
+            float: left;
+        }
+    }
+    .lm_popout, .lm_maximise{
+        display: none;
+    }
+}
+.lm_content{
+    border-radius: 4px;
+}
+.lm_title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 2px;
+}
+.lm_close_tab{
+    display: none;
+}
+
+
+$tabTextColor-Dark: #CDCDCD;
+
+$tabTextColor-Light: #666666;
+
+$tabSelectedTextColor: #2064a9;
+.layout-light{
+    .lm_title{
+        color: $tabTextColor-Light;
+    }
+    .lm_active{
+        .lm_title{
+            color: $tabSelectedTextColor;
+        }
+    }
+    [title$="Stops"].lm_active,
+    [title$="Shipments"].lm_active, [title$="IB Trailers"].lm_active {
+      .lm_title{
+        border-bottom: 2px solid $tabSelectedTextColor;
+      }
+}
+    .lm_splitter {
+        &:hover, // When hovered by mouse...
+        &.lm_dragging {
+          background: #D9D9D9;
+        }
+    }
+    #metrics-container{
+        background-color: #11161C;
+        color: #fff;
+    }
+}
+.layout-dark{
+    .lm_title{
+        color: $tabTextColor-Dark;
+    }
+    .lm_active{
+    .lm_title{
+        color: $tabSelectedTextColor;
+    }
+}
+[title$="Stops"].lm_active,
+    [title$="Shipments"].lm_active, [title$="IB Trailers"].lm_active {
+      .lm_title{
+        color: $tabSelectedTextColor;
+        border-bottom: 2px solid $tabSelectedTextColor;
+      }
+    }
+    .lm_splitter {
+        &:hover, // When hovered by mouse...
+        &.lm_dragging {
+          background: #11161C;
+        }
+    }
+    #metrics-container{
+        background-color: #fff;
+        color: #11161C;
+    }
+}
+#metrics-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    opacity: 0.5;
+    font-size: 12px;
+    line-height: 18px;
+    display: block;
+    padding: 5px 10px;
+    border-radius: 3px;
+    display: none;
+}
+.show{
+    display: block;
+}
+.hide{
+    display: none;
+}
+//Styles for loading animation from Marketing team
+.loadingContainer{
+    height: 50%;
+    width:100%;
+    position: relative;
+    vertical-align: middle;
+    position: relative;
+    top:45%;
+}
+.lds-ellipsis {
+    display: inline-block;
+    position: relative;
+    // height: 100%;
+    // width: 100%;
+    width: max-content;
+    left: calc(50% - 40px)
+
+  }
+  .lds-ellipsis div {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #39a792;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+  .lds-ellipsis div:nth-child(1) {
+    left: 8px;
+    animation: lds-ellipsis1 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(2) {
+    left: 8px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(3) {
+    left: 32px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(4) {
+    left: 56px;
+    animation: lds-ellipsis3 0.6s infinite;
+  }
+  @keyframes lds-ellipsis1 {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes lds-ellipsis3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+  @keyframes lds-ellipsis2 {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(24px, 0);
+    }
+  }
+
+
+
+  /*
+   Animation example, for spinners
+*/
+.animate-spin {
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  -webkit-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+ // display: inline-block;
+}
+
+@-moz-keyframes spin {
+  0% {
+      -moz-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+  }
+
+  100% {
+      -moz-transform: rotate(359deg);
+      -o-transform: rotate(359deg);
+      -webkit-transform: rotate(359deg);
+      transform: rotate(359deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  0% {
+      -moz-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+  }
+
+  100% {
+      -moz-transform: rotate(359deg);
+      -o-transform: rotate(359deg);
+      -webkit-transform: rotate(359deg);
+      transform: rotate(359deg);
+  }
+}
+
+@-o-keyframes spin {
+  0% {
+      -moz-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+  }
+
+  100% {
+      -moz-transform: rotate(359deg);
+      -o-transform: rotate(359deg);
+      -webkit-transform: rotate(359deg);
+      transform: rotate(359deg);
+  }
+}
+
+@-ms-keyframes spin {
+  0% {
+      -moz-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+  }
+
+  100% {
+      -moz-transform: rotate(359deg);
+      -o-transform: rotate(359deg);
+      -webkit-transform: rotate(359deg);
+      transform: rotate(359deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+      -moz-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+  }
+
+  100% {
+      -moz-transform: rotate(359deg);
+      -o-transform: rotate(359deg);
+      -webkit-transform: rotate(359deg);
+      transform: rotate(359deg);
+  }
+}

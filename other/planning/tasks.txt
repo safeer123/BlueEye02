@@ -1,0 +1,736 @@
+DONE -->  add new shader Pair for 3d
+DONE -->  Get and use/learn the best m4 library
+DONE -->  Create Triangle3D, Derive Quad3D from Triangle 3D
+DONE -->  add folder named ShaderFactory // Building Base
+	- config.js
+		- list of { program ID, shaderIds, attribs, uniforms, (texture) }
+	- constants.js
+		- Program ID Enum
+	- GLInitializer.js
+		- Takes list of program Ids to initialize with
+		- shaderPrograms[id] = { ...programCongig }
+		- initLocations
+	- Canvas.js
+		- constructor(programIdList)
+		
+DONE -->  Create first 3d scene with camera
+DONE -->  enable depth test
+DONE -->  face culling
+DONE -->  SceneConfig class - constructor(viewport, camera)
+DONE -->  create instances sceneConfig1, sceneConfig2, ... with different camera/viewport
+DONE -->  render(sceneConfig) => { wo.render(sceneConfig) => setCamera()}
+DONE -->  Change Transform matrix - add class
+DONE -->  ModelTransformMatrix for objects
+DONE -->  Matrix4:getInverseTransposeMatrix()
+DONE -->  Matrix4:applyInverseTransposeMatrix(vec3)
+DONE -->  Add normals based on a flag, in the buffers
+DONE -->  Add new shader program for directional light
+DONE -->  Add new renderConfig file named renderConfigLight
+DONE -->  set UniformGetter for additional uniforms
+DONE -->  fix the Matrix4 multiply order
+DONE -->  create Box3D
+DONE -->  Add ambient term in the shader
+DONE -->  define material properties for WorldObject as defineProperty
+DONE -->  make coefficients as zero by default
+	k_ambient
+	k_diffuse
+	k_specular
+	shininess
+	emissive_color
+
+DONE -->  Fix issue while thetaPhi cam is on top objects get too closer
+
+DONE -->  Rename Cam to Camera (Camera Abstraction)
+
+DONE -->  Sun setupScene(ObjRenderer) set color and direction getters 
+DONE -->  Light setupScene(ObjRenderer) set light position and color getters 
+DONE -->  Shader: WorldViewprojection => ViewProjection * World
+DONE -->  Camera setupScene, set ViewProjection matrix getter
+
+
+----------06/06/2017-------------------------------
+DONE ---> git commit and push current status
+DONE ---> double click for fullscreen
+DONE ---> Fix loading not shown while loading issue
+DONE ---> Add SceneBuilder, Add WorldObjectStore, restructure to render
+DONE ---> render based on renderOnce in the main scene builder
+DONE ---> Loop and render based on the flag renderOnce
+
+DONE ---> Each WO has rebuildProperties flag (default with true)
+DONE ---> If we update any property of this object we set rebuildProperties=true
+DONE ---> Change getProperty workflow based on this.
+DONE ---> Post render make this flag false
+
+DONE ---> WO derives from Node class
+DONE ---> Node: Introduce children [], setChildren([])
+DONE ---> setParentProperties( properties ) { 
+	this.parentProperties = { ...this.parentProperties,  ...properties } //override existing
+	this.rebuildProperties = true;
+}
+DONE ---> Move all property methods into Node
+DONE ---> Introduce world_matrix property (init with Identity matrix)
+DONE ---> world_matrix propertyGetter => compute parentProperties.world_matrix * model_matrix
+DONE ---> world_matrix propertyGetter => pass down to children setParentProperties( { world_matrix });
+DONE ---> Rewrite objRenderer.setUniformGetter(SHADER_VARS.u_world..) to take world_matrix
+
+DONE ---> Bug: light postion change is not reflected in the scene
+DONE ---> Test newly implemented Scene Graph
+
+DONE ---> Fix: canvas resolution on mobile browser (chrome) is very less
+DONE ---> considered window.devicePixelRatio to find high def width
+DONE ---> Fix: why rotation demo is running slow + jerky
+DONE ---> Made use of requestAnimationFrame
+DONE ---> Optymized the render calls based on timestamp updates
+DONE ---> lock the device orientation while fullscreen
+DONE ---> changes m4.vectorMultiply => transformVector(v, m)
+
+DONE ---> All scene setters should derive from the class : SceneSetter
+DONE ---> SceneSetter class
+	- SceneSetterType: camera, light source etc from NodeType List
+	- isActive property (implies is ON OFF)
+	- must have a setSceneMethod invoke based on isActive value
+	
+DONE ---> Every WO has:
+	- a unique Id // can be skipped for now. will do later if necessary.
+	- a type
+DONE ---> Define Scene class
+	- NodeList for rendering
+	- Scene setters
+		- Check current workflow
+		- Iterate and produce a list of Scene setters from NodeList
+		- Each scene setter has isActive flag
+		- currentActive camera Id
+		- find relevant sceneSetters
+	- render method with an argument - viewport
+DONE ---> Define LayoutGenerator
+	- inputs (type: grid, rows, columns) - for now
+	- detailed input for getting custom layouts - can be done later
+	- returns layout {"i-j": viewport }
+
+DONE ---> Define CanvasView:
+	- AssignmentList { scene, viewport }
+	- render method
+DONE ---> Remove/Reuse lib/SceneConfig.js
+DONE ---> Fix displayOut list null issue
+DONE ---> rotation of Scene001 objects
+
+DONE ---> New class deriving from a canvas view and defines a view
+	- this view can have thetaPhi cam to rotate around a node object
+	- this cam should be the child of that node
+DONE ---> Refactor UserControl class
+	- Define and move ControlMode logic into different class
+	- Press a alphabet key + Arrows should be controlling modes
+DONE ---> Register handler for - navigate multiple views using ctrl+v
+DONE ---> We dont have to call scene updater explicitly (we can still have a force render or something)
+DONE ---> Right now there are duplicate calls for scene updater
+DONE ---> we handle userCOntrol's displayOutHandler only in TestView001/index
+DONE ---> fix: Switching views not working
+	- probably we should stop rendering loop for inactive view
+DONE ---> - create views from scratch everytime
+DONE ---> CanvasView start stop - controls renderingLoop appropriately
+DONE ---> Use this when we switch canvasView
+
+DONE ---> Move SplitScreenCanvasViews etc to CustomCanvasViews Folder
+DONE ---> Define a Factory class
+	- objCounter=0 in constructor
+	- registerNodeType(type, Class)
+	- create(type, arguments)
+	- instance should generate unique Id (objCounter + "_" + type)
+	- Use it as singletone
+DONE ---> Replace all node creation with factory
+
+DONE ---> Define a class to: Handle Device orientation feed
+DONE ---> Introduce OneEye: can listen to device orientation changes and update its camera orientation
+DONE ---> displayOut method in userControl. We can use this for debugging.
+DONE ---> Try disabling all extensions and see performance of vscode
+DONE ---> Introduce TwoEyes: two invisible cameras as children.
+	- define pupillary distance
+	- define position => derive left cam pos, and right cam pos
+	- define upVector
+	- setPropertGetter for target_position
+		Define properties like position, looAtDirection, upVector etc
+		
+DONE ---> (?) What is camera_position property is it a World Coordinate
+	- camera_position is in object coordinate system
+	- this will contribute building its model matrix
+DONE ---> Fix: initial phi not working as expected in TwoEye WO
+DONE ---> Change OneEye class such that it will inherit OrientationListener
+
+DONE ---> pass initial phi from getNodes
+DONE ---> Turn on Eslint and formatt code
+DONE ---> Refactor code for OneEye/TwoEyes/OriList
+DONE ---> passing null object renderer should be supported, especially for cameras
+DONE ---> Do Changes where ever we create camera
+
+DONE ---> Look for a mouse/ gesture lib for phones
+DONE ---> implement view switching
+DONE ---> check if we are invoking handleGesture multiple times once we go fullscreen and come back
+DONE ---> Does it work while we are fullscreen (working)
+DONE ---> remove "import SceneBuilder from "./SceneBuilder";" in GLController
+DONE ---> We dont need index file and config file
+DONE ---> Define ViewHolder and take common things with it
+	- list of CanvasViews
+	- view switch option
+DONE ---> Light Source should not have geometry, remove geometry
+DONE ---> instead define GlowingSphere which is WO having a child abstract light source
+DONE ---> Fix: Fullscreen feature is broken
+DONE ---> all init for userControl setup should be renamed to setupControls()
+DONE ---> Fix: loader not coming on top when fullscreen
+DONE ---> swipe left and right distinction
+DONE ---> Refactor ObjectGroup3D files
+
+DONE ---> TrMeshObject
+	- we keep all parameters as options for the geometry
+	- setOptions method
+DONE ---> Fix: There is no scene on desktop at start up of TestView002
+
+DONE ---> Check if setInterval happens on a different thread ? Nope - JS is always single threaded
+
+DONE ---> Why we did not receive gamepaddisconnected event - we received
+DONE ---> decide where to loop the gamepad logic
+DONE ---> create a GamepadController
+	- getId
+	- we can register events, button id, event
+	- axis events
+DONE ---> a config file for this gamepad
+	- id
+	- buttons mapping
+	- axis mapping
+
+DONE ---> current phi, theta => relativePhi, relativeTheta
+	define basePhi, baseTheta
+	phi => basePhi + relativePhi, theta => baseTheta + relativeTheta
+	Add this logic in deviceOrienListener
+DONE ---> Refactored GamePad Controller class
+	It should just emit events just like keyboard events
+	
+DONE ---> Discard stepChange method in UserControl. No normalized t. // DONE
+DONE ---> Keep seperate ArrowLeft and ArrowRight methods // DONE
+DONE ---> All incremental logic should go within the WO // DONE
+DONE ---> controlModeObj: main_key and pre-defined secondary keys should work // DONE
+DONE ---> Integrate Axis values with TwoEyes base angles
+DONE ---> Fixed: Scene is slightly disturbed for small orientational changes
+
+DONE ---> Implement 3D Walking using gamepad
+		Fixed big issue found on the assumption we kept on Camera target pos.
+		TwoEyes: basePhi and baseTheta are controlled by user input keys
+DONE ---> up_vector calculation in OrientationListener
+DONE ---> Fix: Theta stoping at 2pi and cant rotate further
+
+DONE ---> bring UserCOntrol folder outside lib
+DONE ---> rename ObjectGroup2D(3D) to Geometry/Objects2D(3D)
+DONE ---> all user controls should be inside optional method enableDefaultUserControls
+DONE ---> Cylindrical.js
+DONE ---> CylinderSurface3D
+DONE ---> ClosedCylinder3D
+DONE ---> Planar.js
+DONE ---> Sector3D
+
+DONE ---> Spherical.js
+DONE ---> ClosedHemisphere3D
+DONE ---> Use model() method instead of using modelMatrix directly
+DONE ---> All Geometry Objects: primary arguments, and options, use setOptions
+DONE ---> Closed Cylinder should be renamed to just cylinder. Do for other objects.
+DONE ---> rename RectSurface3D to QuadSurface3D
+
+DONE ---> How to segregate files for Different Geometry
+	- Planar, Spherical, Cylindrical, etc
+
+DONE ---> settle issues related to normals
+DONE ---> renderConfig supporting normals can have a setupGeometry(geometry => geometry.enableNormals())
+DONE ---> enableNormals and enableTexture should be under options - not needed.
+DONE ---> Remove enableNormals from ObjectRenderer, these flags should be bound to geometry and renderConfig
+DONE ---> Define 3D walker class which derives from Orientation Listener
+DONE ---> Derive OneEye and TwoEyes from a 3D Walker Class
+DONE ---> implement space walking in OneEye as well.
+DONE ---> OrientationListener enable and disble functions
+
+
+DONE ---> Swipe for switching view will happen only in non-fullscreen model
+DONE ---> Handle this from Content index
+DONE ---> Implement 3D walking using gestures like pinch, pan etc
+	- use pan gesture and rotate theta-phi. use e.velocityX
+	- Implemented spacewalk using pinch
+DONE ---> New Scene
+	- a horizontal plane from x = -100 to x=100
+	- place objects on it
+	- bring cylinder on it
+	- bring sphere, box on it in one end
+	- move cylinder to the next position
+	
+DONE ---> Quad should support color per vertex
+DONE ---> define getColor for more flexibility on choosing the color
+DONE ---> Coloring of Geometry based on a callback with all inputs
+DONE ---> Color on vertex level
+DONE ---> Make a github page for hosting static project
+DONE ---> Fix: Desktop: blank screen just after fullscreen. need some interaction to see the scene.
+DONE ---> Rename initAnimation to initScene
+DONE ---> mouse wheel for space walk on desktop. check hammerjs has mousewheel support.
+DONE ---> Cam ThetaPhi implement pan based rotation.
+DONE ---> Remove idea of InitList from WO class. Wont remove.
+	- because base class properties can be reinitialized to different value in InitList.
+	
+DONE ---> Fix: Scene setters properties are not recomputed, 
+	- when its own render is called earlier and no getProperty methods are present in the render call
+DONE ---> rename Sun WO to GlobalLighting
+	- Later it should take care of all global lighting
+DONE ---> Quadratic attenuation of the light source
+DONE ---> Test this is working along with radius of light
+
+DONE ---> Fix: Display out font is very big now
+DONE ---> Show current view
+DONE ---> Debug: Keyboard actions not working
+DONE ---> Fix: Css for display out
+DONE ---> Fix: Duplicate display out msg for cam theta phi
+	- duplicates added up on fullscreen/out
+DONE ---> Consume list of views in the view buttons panel
+DONE ---> Handle selection of the view
+DONE ---> When user changes view throught other means update it as well
+
+DONE ---> fix: displayOut duration logic breaks
+DONE ---> Remove swipe based view switching
+DONE ---> enable all controls in non-fullscreen mode
+DONE ---> fix: mousewheel not working
+DONE ---> Move gesture handling to userControl folder
+DONE ---> fullscreen switch should happen through controlModeHandler
+DONE ---> Fix: gestures and other keys not working after the changes
+DONE ---> all displayOut values should have decimals upto 2 digits
+DONE ---> 3D Walk comes twice in the displayOut popup - resolved
+DONE ---> design dropdown and state for settings page
+DONE ---> in control mode object pass key within the object
+DONE ---> register/unregister user control should be through events
+
+DONE ---> Implement TowerLight User Control
+DONE ---> Fix: UserControl class takes duplicate ids now
+DONE ---> Implement KeyboardListener class singleton and receive list of pressed keys
+DONE ---> Each WO class have getUserControls method
+DONE ---> canvasView should clear registered controls while start up
+DONE ---> canvasView should then iterate over scenes and emit event for registering controls
+
+DONE ---> Fix: power button stops working once changing view
+DONE ---> Implement Gesture handling as per new workflow of user control class
+DONE ---> Abstract out selected control as ControlGroup pass props
+DONE ---> Tower Light has power ON and power OFF switch
+DONE ---> Tower Light has color switch blue-green-red-white
+
+DONE ---> addControls - rewrite the controls workflow and commit all controls
+DONE ---> SpeechRecognition testing - get source code and play around
+DONE ---> implement in existing app and display out results
+DONE ---> ControlSettings - We can have multiple control boxes open at same time
+DONE ---> ControlSettings - Close Button for removing the selected object
+DONE ---> ControlSettings is draggable - use DraggableExample in downloads folder
+	- we wont be making it drggable for now
+DONE ---> ControlSettings - Toggle button for enable disable controls against one id
+
+DONE ---> Control items panel - horizintal scroll support for overflow in x
+DONE ---> Control Box - Vertical scroll if max height exceeded
+DONE ---> GlobalLighting: Should not have Rectnagle2D geometry
+DONE ---> We dont support 2D objects now - Remove 2D config stuffs
+DONE ---> Set clear color to something decent
+DONE ---> Fix: Resizing the window, losing aspect ratio of the scene
+DONE ---> Remove rebuildNodes() from CanvasView classes
+DONE ---> Remove userCOntrol object from WO - We are using events instead
+DONE ---> TestScene001 should have updates as per the new refactor working TestScene002
+DONE ---> Each scene should be persisted across the views
+	- We can identify this by checking light states after switching views
+DONE ---> REMOVE UPDATERS and USE EVENTS INSTEAD
+DONE ---> onExit and onEnter callbacks in viewholder - against each views defined
+DONE ---> VR CanvasView can emit pair mode view events and
+DONE ---> Anything to do in the start of a canvasView should go inside onExit and onEnter callbacks
+	- Active camera controls can be enabled/disabled
+DONE ---> Important change:
+	- RebuildProperties logic should be seperated out from render method in WO
+DONE ---> Refactor sceneSetter: render()
+DONE ---> remove sceneSettingProps from sceneSetters
+DONE ---> Fix: We dont want want to register controls on each view switch
+DONE ---> camThetaPhi switchTarget: add button for control
+DONE ---> Are we calling AbstractCamera:getProjectionViewMatrix() multiple times for each object
+	- It should get called once per render call
+DONE ---> Spherical Camera - add a method setTargetObjects list=[objs]
+	- Create a control that switches the target
+	
+DONE ---> Speech Recognition - Step 1
+	- Microphone is for Enabling entire speechRecognition service
+	- Microphone grey inactive - can be toggled
+	- Microphone red/green active - while active inactive
+	
+DONE ---> Speech Recognition - Step 2 - processing
+	- Voice commands has "hot word" list in priority order - then the command
+	- Create a config structure for this
+	- using hot words create buckets and branching
+DONE ---> while switch view control settings dropdown should close - no need to close
+DONE ---> implement voice control for - glowing sphere - light power switching
+	- pass the name of the light to the voice command config
+DONE ---> Debug: Why voice cmd not working with OEV - Fixed
+DONE ---> Implement voice control for space walk
+	- "walk by 20.0"
+	- "walk backwards by 20.0"
+	- "turn left/right/up/down by 30.0"
+	- make incremental changes over time
+	- add onTick calls
+DONE ---> summary displayOut
+	- implement summary displayOut in the overlay components
+	- Keep it different from voice command display
+DONE ---> Bug-fix alt+t for changing the targets not working
+DONE ---> once we try this pan and weels not working
+
+DONE ---> Correction: 4X4 should be 2X2
+DONE ---> speech (View)
+	- switch view
+	- List of views
+	- Switch to <ViewName>
+	- Current View
+
+===========================================
+
+Fix: Keyboard not working for the first view
+
+Four tall light towers
+	- cylindrical stands
+	- light holder box on top
+	- hemispherical light
+	- square base
+	.. bring old points here
+voice: control for power and color of light
+
+Create a class SceneGraph
+	- singleton
+	- All static members
+	- render(nodes)
+	- onTick(nodes)
+	- registerControls(nodes)
+	- etc
+	
+Control Settings buttons
+	- Change 'Select Controls' to 'N Control Sets'
+	- Add clear all 'X' button on right side
+	
+Summary display should be enabled/disabled
+
+speech (Global)
+	- My coordinates
+	- My direction
+	
+Glowing Sphere - create setName methode and pass the name to voice config
+	
+We should be able to scroll by pan horizontally all control sets if overflowing
+	
+Microphone activation control from global settings as well
+
+Speech Suggestions (Complex thing - will do at the end)
+	- Find out objects in the view
+	- Provide Speech suggestions at run time
+	- "Turn on speech suggestions" is one command :)
+
+Implement custom scrollbar for the control-items-container box
+	- right now pointer-events:none will disable default scrolling
+
+GlowingLight power button not working in scene001
+
+Fix: eslint: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+	- Wherever onClick is added
+	
+Remove redux connect in components where we dont use it
+
+
+fix: gamepadconnected event is not triggered in chrome on mobile
+	- Use online tester applications to verify
+	- Somehow keys are triggered in KeyboardListener as Undefined - strange !!
+
+Implement device orientation as single input in control list
+
+Remove following deprecated types 
+	MasterPrimaryKeys,
+	PrimaryKeys,
+	SecondaryKeys,
+	listenToDeviceOrientation
+	stopListeningToOrientationChange
+
+Gamepad controller should be providing list of pressed keys
+
+implement more tower lights and pass the control key as a method
+
+Implement unregisterControl
+
+We assume one ViewHolder will have unique ids across objects in its scenes
+	- If objects in two scenes are same, then there should be duplicate ids
+	- If scenes are different, then ids are different
+
+emitter.listenerCount(eventName) is usefull to check if there are unexpected count listeners
+
+re-write controlMode managing
+	- registerObjectControl and unregisterObjectControl
+	- registerViewControl and unregisterViewControl
+	- control through events
+	- remove old code
+
+Fix: Maximum Light count reached
+
+use settings control to enable disable displayout feature
+
+bring settings dropdown showing possible controls
+
+move loader to the Common folder and use it inside content/index.js
+
+implement support for multiple light sources
+
+Place three light sources for test
+
+implement switches for each light source
+
+make another carpet on the platform perpenticular to the previous one
+
+Place lights at four ends and the center of the platform object
+
+Place more objects in the scene
+	- rearrange objects for better visual experience
+
+Shader: Lights should have isON flag, based on that, optimize the looping
+	- Already there is isON property for light WO, use this
+	
+Shader: Lights should have radius input, pass it from a WO property
+	- Add light radius as a shader input attribute of type float
+
+Didn't understand this post on attenuation
+https://gamedev.stackexchange.com/questions/21057/does-the-linear-attenuation-component-in-lighting-models-have-a-physical-counter
+	
+global ambience should be implemented in GlobalLighting WO
+
+implement spot light with angle input
+
+Box3D: propery faceColorGetter(face) return getColor for face;
+Refactor/Optymize code for Box3D generateChildren
+
+Move stateUpdateHandler in Content/index to Overlay components
+
+Refactor M4 lib and Matrix4 class. add sub tasks here.
+
+Fix: pan rotations are not appropriate. Seems like we should not use x(y)Velocity
+
+Other.js
+Define pipeSurface
+Invent Complex structures
+
+Consider re-using one scene object across multiple CanvasViews
+Create one/few super scenes and clone from them
+
+Fix: We implemented a dirty way to pass world_matrix by calling setProp(world_matrix) in render() call
+
+In WO, if objectRenderer is null, all material properties should be removed
+They won't be applicable anywhere - investigate and fix
+
+investigate on lookAt matrix
+how it will transform for different orientatoin at origin
+make geometry for camera in x,y,z direction and can be tested
+write concluded results at right place
+
+Rename/Refactor stateUpdateHandler in Content
+
+
+Optymize: Scene setters getProp(world_matrix) called several times in one cycle
+
+We can pass a state from CanvasLayer to Content
+	- Use this logic to - show loading while switching
+	- setTimeout( createScene() )
+	- discard the done() callback
+	
+	
+Define RoboHead: TwoEyes and Geometry for robot head shape
+
+	
+Refactor Objects2D
+
+Fix: Fullscreen is failing in some cases but works in other cases
+check other apps also failing fullscreen
+
+Fix: gesture handling should be done inside UserControl only
+
+
+refactor (alpha,beta,gamma) to (phi, theta) calc in OrientationListener
+
+
+What is unique id for a gamepad. Are we using it correclty for configuring.
+
+
+Can we show loader only when there is a delay in processing objects ?
+
+check whether noSleep implementation is working in Content/index
+
+
+Find work around: The deviceorientation event is deprecated on insecure origins
+
+set where cache=true needed for Utils.rThetaPhiToXYZ
+
+Fix if: Check if we keep on adding listeners to Device Orientation Feed and not removing
+We can clear listeners just before we create objects
+
+Keyboard activities and configuration are tightly bound to WOs. Should be decoupled.
+
+Try generating key-index https://menubar.io/react-keys-index
+
+
+
+Decouple the Sun Object from Background Objec
+To create background we define new class: Background
+
+? Camera can have optional Background child
+
+use drawingBufferWidth when we are dealing with canvas dimesions for drawingBufferWidth
+
+make sure we dont use any antipatterns in our code
+refer : https://webglfundamentals.org/webgl/lessons/webgl-anti-patterns.html
+
+? CustomViews folder to CustomLayers
+
+SceneBuilder/CanvasLayer to define CanvasLayer class
+	- all scenes derives from it
+	- this.view 
+	- this.sceneUpdater
+
+Ctrl+Shift+A => display all keyboard/user input options
+
+Do we really need initList ? can we reuse the values in propertyList ?
+
+Can we use gl.drawArrays(Triangle_strips/fan) for optymizing number of vertices passed
+
+
+
+differentiate sceneConfig and scene
+One view can have list of scenes
+scene is created out of a scene config
+
+Differentiate Geometry Objects from WO
+Geometry Objects: Two types
+	Basic Objects: (, triangle, rectangle, sphere, box, cylinder, with customizible params),
+	Composite Objects: Composition of different Basic Objects with higher input params
+WO->addGeometryObject, can add multiple Geometry Objects
+
+Geometry Object editing
+setEditFlush(editFlush) {
+	this.editFlush = editFlush;
+}
+editFlush is a method from ObjectRenderer which will edit the buffer for this Object
+
+Define scene data, with all configurations and new Composite Objects
+One scene data should ideally render a complete scene
+
+No shape for camera
+If we want a shape define a WO keep cam as child
+Same holds for lights
+
+RenderOptimizer: distant objects (from cam) are not visible
+visibility off and in a closer distance alpha shoots up from 0 to 1
+
+Bug: 2 cam type ThetaPhi wont work properly
+
+Remove unnecessary forlders/files created
+
+
+Text rendering from an invisible 2D canvas
+At run time add a texture from this image
+
+Fix the performance part generated by light house. Big gap for starting the app.
+
+Texts should be non-selectable
+
+Make it more React-Redux project
+
+Disc3D, innerRadius, OuterRadius
+Cylinder3D, closeTop, closeBottom
+Cone3D
+
+Basic WorldObjects should not have userControl logic
+instead, we pass this.inObj.userControl and inherit WO class to access this
+Keep WOs pure from custom features
+
+React based configure popup using a configurables object and set UI
+callback whenever a change is triggered from user and return the config state
+
+Every WO has a configurable list.
+populate and get the popup for configuration
+
+Wire view Rendering
+
+Currently we have per quad color for objects. Change to per vertex color.
+
+normals: improve the way we are dealing with normal vectors
+
+add normal for surface3D plane
+
+colorGetter() default and overrides
+
+remove unwanted imports from files
+addVector, subt.. move to V3 and import V3
+
+Optimize: Add pseudo rand Util method for colors
+
+length and area based surface division to quad3ds
+use sin(theta) to decide n at each height of sphere3d.
+(this can save/improve efficiency for objects)
+
+
+==+ LIGHT +===
+
+float3 ambient = u_Ka * ambientLightColor;
+
+float3 L = normalize(u_lightPosition - P);
+float3 N = normalize(v_normal);
+float3 diffuse = u_Kd * u_lightColor * diffuseLight;
+float diffuseLight = max(dot(N, L), 0);
+
+
+Ideally we should have provition to add normal per vertex for quad
+Since we use only spherical objects keep normal as the vertex itself
+
+Draw 2d lines for viewports- objectGroup2D
+
+Create 3D line segment.
+Draw y axis as a 3D line seg.
+
+viewport 1 large and other small
+
+colorBandWidth = 0 => single color, else multi
+later make custom color generator callbacks
+
+
+
+
+make appUtils default export	
+color as input for RectSurface3D, Sphere3D
+moving shaders into static text files and read from it
+create path alias/shortcuts and use them appropriately
+WorldScene0 - RoomObject 3 walls and a pillar in  cylinder shape
+			- A ball on the floor
+			- A box on the floor
+			(Create a folder for each and create WorldObjects for each)
+
+
+Figure out how to convert 16byte float color to 4byte(4 unsigned_byte)
+	- Did not work out we need more time
+	
+	
+Object Detection:
+Entire problem will come down to solving ==> Given a line ( Point + Vector ) which side of the box it will hit next
+OR short grid path from (i1, j1) to (i2, j2)
+slope m = j2-j1 / i2-i1
+line j-j1 / i-i1  =   m
+iterate from i1 to i2 find j as ceil and floor both
+
+M = inverse(projectionViewMatrix) p11=M*p1 p22=M*p2 first Object hitting this line
+
+
+//==============================================================//
+
+
+
+
+
+
+
+
+
+
+
+
+
+

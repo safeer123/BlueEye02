@@ -171,7 +171,7 @@ const commonConfig = () => ({
       },
       {
         from: `${__dirname}/public/_redirects`,
-        to: `${__dirname}/`
+        to: `${__dirname}/dist/`
       }
     ]),
     new CleanWebpackPlugin(["dist"], {

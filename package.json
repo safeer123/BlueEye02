@@ -1,7 +1,7 @@
 {
-  "name": "skygate",
+  "name": "blyeeye",
   "version": "1.0.0",
-  "description": "Frontend project for SkyGATE application",
+  "description": "BlueEYE application",
   "main": "index.js",
   "scripts": {
     "start": "npm-run-all --parallel  open",
@@ -12,7 +12,7 @@
     "lint": "node_modules/.bin/esw config src",
     "lint:watch": "npm run lint -- --watch"
   },
-  "author": "Optym",
+  "author": "Safeer Chonengal",
   "license": "ISC",
   "dependencies": {
     "@date-io/date-fns": "^1.1.0",

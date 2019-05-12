@@ -1,10 +1,16 @@
 
+import RouteSwitcher from '../utilities/RouteSwitcher';
+
 export default {
   toPage: (i) => {
-    window.location = `/sample/${i}`;
+    const url = `/sample/${i}`;
+    const hist = RouteSwitcher.getHistory();
+    hist.push(url);
   },
 
   toHome: () => {
-    window.location = '/';
+    const url = '/';
+    const hist = RouteSwitcher.getHistory();
+    hist.push(url);
   },
 };

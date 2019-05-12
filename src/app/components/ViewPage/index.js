@@ -1,6 +1,7 @@
 import React from 'react';
 import Fullscreen from 'react-full-screen';
 
+import RouteSwitcher from '../../utilities/RouteSwitcher';
 import {
   GLController,
   EventEmitter,
@@ -22,7 +23,8 @@ class ViewPage extends React.Component {
     };
     this.resizeHandler = this.resizeHandler.bind(this);
     EventEmitter.on(EventName.FullscreenSwitch, e =>
-      this.handleFullscreenSwitch(e),);
+      this.handleFullscreenSwitch(e));
+    RouteSwitcher.setHistory(props.history);
   }
 
   componentDidMount() {

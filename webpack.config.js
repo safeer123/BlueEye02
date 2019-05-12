@@ -12,7 +12,7 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const imageminMozjpeg = require('imagemin-mozjpeg');
 
 
-const API_SERVER_URL = 'http://is-gnv-hpapp01:9701/';
+const API_SERVER_URL = '';
 
 // Development Configuration
 const devConfig = () => ({
@@ -39,11 +39,6 @@ const devConfig = () => ({
       },
       '/auth': {
         target: API_SERVER_URL,
-      },
-      '/notifications': {
-        target: API_SERVER_URL,
-        changeOrigin: true,
-        ws: true,
       },
     },
   },

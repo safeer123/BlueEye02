@@ -36,20 +36,18 @@ class ViewButtonsPanel extends React.Component {
     if (viewList.length === 0) return null;
     const viewName = viewList[selectedViewIndex].name;
     return (
-      <div className={`view-buttons-panel-wrapper ${hidden}`}>
-        <div className="view-buttons-panel">
-          <span className="view-name-title">{viewName}</span>
-          <ToggleButtonGroup
-            value={selectedViewIndex}
-            onChange={(e, i) => this.handleChange(i)}
-            exclusive
-            className="btn-group"
-          >
-            {viewList.map((view, index) => {
+      <div className={`view-buttons-panel ${hidden}`} >
+        <span className="view-name-title">{viewName}</span>
+        <ToggleButtonGroup
+          value={selectedViewIndex}
+          onChange={(e, i) => this.handleChange(i)}
+          exclusive
+          className="btn-group"
+        >
+          {viewList.map((view, index) => {
               const { id, short } = view;
               return (
                 <ToggleButton
-                  color="primary"
                   key={id}
                   value={index}
                 >
@@ -57,8 +55,7 @@ class ViewButtonsPanel extends React.Component {
                 </ToggleButton>
               );
             })}
-          </ToggleButtonGroup>
-        </div>
+        </ToggleButtonGroup>
       </div>
     );
   }

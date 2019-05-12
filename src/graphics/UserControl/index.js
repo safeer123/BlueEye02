@@ -1,12 +1,12 @@
-import ControlModeManager from "./ControlModeManager";
-import DeviceOrientationFeed from "./DeviceOrientation";
-import GamepadControl from "./GamepadController";
-import GestureController from "./GestureController";
-import KeyboardListener from "./KeyboardListener";
-import GamepadKeyListener from "./GamepadKeyListener";
-import SpeechProcessor from "./SpeechProcessor";
+import ControlModeManager from './ControlModeManager';
+import DeviceOrientationFeed from './DeviceOrientation';
+import GamepadControl from './GamepadController';
+import GestureController from './GestureController';
+import KeyboardListener from './KeyboardListener';
+import GamepadKeyListener from './GamepadKeyListener';
+import SpeechProcessor from './SpeechProcessor';
 
-import configGP from "./CustomGamepadConfig/VRSHINECON";
+import configGP from './CustomGamepadConfig/VRSHINECON';
 
 export default class UserControl {
   constructor(canvasWrapper, sceneUpdater) {
@@ -21,6 +21,8 @@ export default class UserControl {
     this.gamepadControllerSetup();
     // Listen to Gesture input events
     this.gestureInputSetup(canvasWrapper);
+    // initialize Speech Processor
+    SpeechProcessor.init();
   }
 
   displayOut(displayOutList) {
@@ -34,15 +36,15 @@ export default class UserControl {
 
   deviceOrientationFeedSetup() {
     const { controlModeMngr } = this;
-    DeviceOrientationFeed.addListener(e => {
-      controlModeMngr.fireAction("orientation", e);
+    DeviceOrientationFeed.addListener((e) => {
+      controlModeMngr.fireAction('orientation', e);
     });
   }
 
   keyboardEventSetup() {
     const { controlModeMngr } = this;
 
-    KeyboardListener.setKeyListener(ks => {
+    KeyboardListener.setKeyListener((ks) => {
       const keys = this.getAllPressedKeys();
       // console.log(keys);
       // this.displayOut([this.keysToString(keys)]);
@@ -51,20 +53,19 @@ export default class UserControl {
   }
 
   gamepadControllerSetup() {
-    GamepadControl.onConnected(e => this.displayOut(["Connected", e.name]));
+    GamepadControl.onConnected(e => this.displayOut(['Connected', e.name]));
     GamepadControl.onDisconnected(e =>
-      this.displayOut(["Disconnected", e.name])
-    );
+      this.displayOut(['Disconnected', e.name]),);
     GamepadControl.registerGamepadConfig(configGP);
 
     const { controlModeMngr } = this;
-    GamepadKeyListener.setKeyListener(ks => {
+    GamepadKeyListener.setKeyListener((ks) => {
       const keys = this.getAllPressedKeys();
       // console.log(keys);
       controlModeMngr.fireAction(this.keysToString(keys));
     });
 
-    GamepadControl.onAxisValueChanged(e => {
+    GamepadControl.onAxisValueChanged((e) => {
       // console.log("GP Axis: ", e);
       const { axisName, value } = e;
       const keys = [...this.getAllPressedKeys(), axisName];
@@ -73,7 +74,7 @@ export default class UserControl {
     });
   }
 
-  gestureInputSetup = domElement => {
+  gestureInputSetup = (domElement) => {
     this.gestureControl = new GestureController(domElement);
     this.gestureControl.onGestureInput((gestureType, e) => {
       const { controlModeMngr } = this;
@@ -84,7 +85,7 @@ export default class UserControl {
     });
   };
 
-  keysToString = keys => keys.sort().join("+");
+  keysToString = keys => keys.sort().join('+');
 
   getAllPressedKeys = () => {
     const keys1 = KeyboardListener.getPressedKeys();

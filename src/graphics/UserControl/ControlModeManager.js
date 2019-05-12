@@ -1,21 +1,22 @@
-import EventEmitter from "../lib/EventEmitter";
-import { EventName, ControlTypes } from "../constants";
+import EventEmitter from '../lib/EventEmitter';
+import { EventName, ControlTypes } from '../constants';
 
 export default class ControlModeManager {
   constructor() {
     this.controlModes = {};
-    this.currentModeKey = "default";
+    this.currentModeKey = 'default';
 
     this.clearControls();
     EventEmitter.on(EventName.RegisterControls, this.registerControl);
     EventEmitter.on(EventName.UnregisterControls, this.unregisterControl);
     EventEmitter.on(EventName.ClearControls, this.clearControls);
+    EventEmitter.on(EventName.ToggleControlEnableFlag, this.toggleEnable);
   }
 
   // Registers a ControlObject that defines a list of controls and respective
   // keys and action callbacks optionally summary callback as well
   // { id:String, type:String, controls:[{name, action, input, summary}], enabled:Boolean }
-  registerControl = controlObj => {
+  registerControl = (controlObj) => {
     const { id, type, controls } = controlObj;
 
     const isEnabled = () => controlObj && controlObj.enabled;
@@ -25,18 +26,20 @@ export default class ControlModeManager {
 
     this.controlsById[type][id] = controlObj;
     if (controls && controls.length > 0) {
-      const controlList = controls.map(c => ({ ...c, id, type, isEnabled }));
-      controlList.forEach(c => {
+      const controlList = controls.map(c => ({
+ ...c, id, type, isEnabled 
+}));
+      controlList.forEach((c) => {
         const { input } = c;
         if (input && input.length > 0) {
-          input.forEach(inputKeys => {
+          input.forEach((inputKeys) => {
             const sortedKeys = inputKeys
-              .split("+")
+              .split('+')
               .sort()
-              .join("+");
+              .join('+');
             const registeredControls = this.registeredControls[type];
             if (!registeredControls[sortedKeys])
-              registeredControls[sortedKeys] = [];
+              {registeredControls[sortedKeys] = [];}
             registeredControls[sortedKeys].push(c);
           });
         }
@@ -44,27 +47,27 @@ export default class ControlModeManager {
     }
   };
 
-  unregisterControl = controlObjId => {};
+  unregisterControl = (controlObjId) => {};
 
   // Clears all registered controls of type controlType(input)
   clearControls = () => {
     this.registeredControls = {
       [ControlTypes.GlobalControl]: {},
-      [ControlTypes.ObjectControl]: {}
+      [ControlTypes.ObjectControl]: {},
     };
     this.controlsById = {
       [ControlTypes.GlobalControl]: {},
-      [ControlTypes.ObjectControl]: {}
+      [ControlTypes.ObjectControl]: {},
     };
   };
 
   fireAction(inputKeys, value) {
-    Object.values(this.registeredControls).forEach(registeredControls => {
+    Object.values(this.registeredControls).forEach((registeredControls) => {
       if (
         registeredControls[inputKeys] &&
         registeredControls[inputKeys].length > 0
       ) {
-        registeredControls[inputKeys].forEach(c => {
+        registeredControls[inputKeys].forEach((c) => {
           if (c.isEnabled()) {
             if (c.action) c.action(value);
             EventEmitter.emit(EventName.ControlObjectModified, c.id);
@@ -73,4 +76,22 @@ export default class ControlModeManager {
       }
     });
   }
+
+  toggleEnable = ({ id, flag }) => {
+    if (id) {
+      Object.values(this.controlsById).forEach((controls) => {
+        if (controls[id]) {
+          const controlObj = controls[id];
+          if (controlObj) {
+            if (typeof flag !== 'undefined') {
+              controlObj.enabled = flag;
+            } else {
+              controlObj.enabled = !controlObj.enabled;
+            }
+            EventEmitter.emit(EventName.ControlObjectModified, controlObj.id);
+          }
+        }
+      });
+    }
+  };
 }

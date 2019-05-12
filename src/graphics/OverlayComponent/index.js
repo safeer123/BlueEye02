@@ -1,11 +1,14 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
+import { Home } from '@material-ui/icons';
+
 import MessagePane from './MessagePane';
 import ViewButtonsPanel from './ViewButtonsPanel';
 import './index.css';
 // import ControlSettings from './ControlSettings';
 import SpeakButton from './SpeakButton';
 import HideLayerButton from './HideLayerButton';
+import FooterPanel from './FooterPanel';
 import { EventEmitter, EventName } from '../';
 
 class Overlay extends React.Component {
@@ -50,20 +53,28 @@ class Overlay extends React.Component {
         <HideLayerButton active={show} />
         { /* <ControlSettings show={show} /> */}
         <MessagePane />
-        <ViewButtonsPanel show={show} />
-        {show && <SpeakButton />}
         {this.displayLoader()}
-        {show && (
-          <div className="back-home">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => this.props.Navigate.toHome()}
-            >
-              HOME
-            </Button>
-          </div>
-        )}
+        <FooterPanel
+          contentItems={[
+            // Home Button
+            show && (
+              <div className="back-home">
+                <Button
+                  size="small"
+                  variant="contained"
+                  // color="primary"
+                  onClick={() => this.props.Navigate.toHome()}
+                >
+                  <Home fontSize="small" color="primary" /> HOME
+                </Button>
+              </div>
+            ),
+            // View Buttons Panel
+            <ViewButtonsPanel show={show} />,
+            // Speak Button
+            show && <SpeakButton />,
+        ]}
+        />
       </div>
     );
   }

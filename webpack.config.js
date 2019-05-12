@@ -7,7 +7,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const imageminMozjpeg = require('imagemin-mozjpeg');
 
@@ -76,18 +77,18 @@ const commonConfig = () => ({
   },
   module: {
     rules: [
-    //   {
-    //     type: 'javascript/auto',
-    //     test: /\.json$/,
-    //     use: [
-    //         {
-    //           loader: 'file-loader',
-    //           options: {
-    //               name: "./externalConfig/[name].[ext]"
-    //           }
-    //         }
-    //     ]
-    // },
+      //   {
+      //     type: 'javascript/auto',
+      //     test: /\.json$/,
+      //     use: [
+      //         {
+      //           loader: 'file-loader',
+      //           options: {
+      //               name: "./externalConfig/[name].[ext]"
+      //           }
+      //         }
+      //     ]
+      // },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -164,6 +165,10 @@ const commonConfig = () => ({
         from: `${__dirname}/src/app/assets`,
         to: `${__dirname}/dist/app/assets/`,
       },
+      {
+        from: `${__dirname}/public/_redirects`,
+        to: `${__dirname}/dist/`,
+      },
     ]),
     new CleanWebpackPlugin(['dist'], {
       root: path.resolve(__dirname),
@@ -178,10 +183,9 @@ const commonConfig = () => ({
       jQuery: 'jquery',
     }),
     new ImageminPlugin({
-      pngquant: ({ quality: '50' }),
+      pngquant: { quality: '50' },
       plugins: [imageminMozjpeg({ quality: '50' })],
     }),
-
   ],
 });
 

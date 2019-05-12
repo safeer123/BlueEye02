@@ -6,9 +6,9 @@
   "scripts": {
     "start": "npm-run-all --parallel  open",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --mode development --hot --inline --env.prod=false --port=3700",
+    "dev": "webpack-dev-server --mode development --hot --inline --env.prod=false --port=2401",
     "build": "webpack -p --env.prod=true --mode production",
-    "open": "webpack-dev-server --mode development --env.prod=false --open --port=3700",
+    "open": "webpack-dev-server --mode development --env.prod=false --open --port=2401",
     "lint": "node_modules/.bin/esw config src",
     "lint:watch": "npm run lint -- --watch"
   },

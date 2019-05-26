@@ -1,4 +1,6 @@
 import React from "react";
+import { Lens, Close, ToggleOn, ToggleOff } from "@material-ui/icons";
+
 import { shortenKeys } from "./constants";
 import { EventEmitter, EventName, BTN } from "../../";
 import "./index.css";
@@ -45,13 +47,19 @@ class ControlMenu extends React.Component {
 
     const { enabled } = selectedControl;
     const closeBTN = BTN.Close;
-    const toggleBTN = BTN.Toggle(enabled);
+    const ToggleBTN = enabled ? ToggleOn : ToggleOff;
     const disabledClass = enabled ? "" : "disabled";
     return (
       <div className="control-items-wrapper">
         <div className="control-header">
-          <i className={`${toggleBTN} pull-left`} onClick={this.toggleEnable} />
-          <i className={`${closeBTN} pull-right`} onClick={this.handleClose} />
+          <ToggleBTN
+            className={`pull-left clickable-item`}
+            onClick={this.toggleEnable}
+          />
+          <Close
+            className={`pull-right clickable-item`}
+            onClick={this.handleClose}
+          />
         </div>
         <div className="control-title">
           {this.idToLabel(selectedControl.id)}
@@ -71,9 +79,9 @@ class ControlMenu extends React.Component {
                 {input && <div className="control-keys">{inputDisplay}</div>}
                 {controlButton && (
                   <div className={`control-btn ${disabledClass}`}>
-                    <i
-                      className={iconClass}
+                    <Lens
                       onClick={() => this.fireAction(obj, enabled)}
+                      className="clickable-item"
                     />
                   </div>
                 )}

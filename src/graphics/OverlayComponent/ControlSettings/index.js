@@ -1,17 +1,22 @@
-import React from 'react';
-import { SplitButton, MenuItem, FormControl } from 'react-bootstrap';
+import React from "react";
+import { Settings, Close } from "@material-ui/icons";
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
+
 import {
   objControlListForTest,
-  globalControlListForTest,
-} from './sampleControls';
-import ControlMenu from './ControlMenu';
-import { EventEmitter, EventName, BTN, ControlTypes } from '../../';
-import './index.css';
+  globalControlListForTest
+} from "./sampleControls";
+import ControlMenu from "./ControlMenu";
+import { EventEmitter, EventName, BTN, ControlTypes } from "../../";
+import "./index.css";
 
 const UseTestControls = false;
 const SearchInput = {
   GLOBAL_CONTROL_SEARCH: 0,
-  OBJECT_CONTROL_SEARCH: 1,
+  OBJECT_CONTROL_SEARCH: 1
 };
 
 class ControlSettings extends React.Component {
@@ -23,9 +28,10 @@ class ControlSettings extends React.Component {
       globalControls: {},
       objectControls: {},
       searchKey: {
-        [SearchInput.GLOBAL_CONTROL_SEARCH]: '',
-        [SearchInput.OBJECT_CONTROL_SEARCH]: '',
+        [SearchInput.GLOBAL_CONTROL_SEARCH]: "",
+        [SearchInput.OBJECT_CONTROL_SEARCH]: ""
       },
+      anchorEl: null
     };
     if (UseTestControls) {
       this.state.globalControls = globalControlListForTest;
@@ -39,20 +45,20 @@ class ControlSettings extends React.Component {
     this.selectedControlById = {};
   }
 
-  unregisterControl = (controlObjId) => {};
+  unregisterControl = controlObjId => {};
 
   clearControls = () => {
     setTimeout(() => {
       this.setState({
         selectedControls: [],
         globalControls: {},
-        objectControls: {},
+        objectControls: {}
       });
       this.selectedControlById = {};
     }, 0);
   };
 
-  controlModified = (id) => {
+  controlModified = id => {
     if (id) {
       this.forceUpdate();
     }
@@ -75,12 +81,13 @@ class ControlSettings extends React.Component {
     if (controlToAdd) {
       this.selectedControlById[id] = controlToAdd;
       this.setState({
-        selectedControls: [...this.state.selectedControls, controlToAdd],
+        selectedControls: [...this.state.selectedControls, controlToAdd]
       });
     }
+    this.handleMenuClose();
   }
 
-  getMenuItems(controlObjList, searchKey = '') {
+  getMenuItems(controlObjList, searchKey = "") {
     const itemList = [];
     controlObjList.forEach((obj, i) => {
       const { id } = obj;
@@ -90,21 +97,25 @@ class ControlSettings extends React.Component {
         ? label.toLowerCase().includes(searchKey.toLowerCase())
         : true;
       if (addItem) {
-        itemList.push(<MenuItem
-          key={elemKey}
-          eventKey={id}
-          disabled={Boolean(this.selectedControlById[id])}
-        >
-          {label}
-        </MenuItem>);
+        itemList.push(
+          <MenuItem
+            key={elemKey}
+            eventKey={id}
+            disabled={Boolean(this.selectedControlById[id])}
+            onClick={() => this.handleDropdown(id)}
+          >
+            {label}
+          </MenuItem>
+        );
       }
     });
     return itemList;
   }
 
   getSearchBox = searchType => (
-    <FormControl
-      type="string"
+    <TextField
+      fullWidth
+      label="Search"
       value={this.state.searchKey[searchType]}
       onChange={e => this.searchInputChange(searchType, e.target.value)}
       onFocus={() => this.enableDisableKeyListener(false)}
@@ -112,19 +123,19 @@ class ControlSettings extends React.Component {
     />
   );
 
-  registerControl = (controlObj) => {
+  registerControl = controlObj => {
     setTimeout(() => {
       const { id, type } = controlObj;
       if (type === ControlTypes.GlobalControl) {
         const globalControls = {
           ...this.state.globalControls,
-          [id]: controlObj,
+          [id]: controlObj
         };
         this.setState({ globalControls });
       } else if (type === ControlTypes.ObjectControl) {
         const objectControls = {
           ...this.state.objectControls,
-          [id]: controlObj,
+          [id]: controlObj
         };
         this.setState({ objectControls });
       }
@@ -149,12 +160,12 @@ class ControlSettings extends React.Component {
     this.setState({
       searchKey: {
         ...this.state.searchKey,
-        [SearchInputType]: value,
-      },
+        [SearchInputType]: value
+      }
     });
   };
 
-  enableDisableKeyListener = (flag) => {
+  enableDisableKeyListener = flag => {
     const event = flag
       ? EventName.EnableKeyboardListener
       : EventName.DisableKeyboardListener;
@@ -163,12 +174,20 @@ class ControlSettings extends React.Component {
 
   clearAll = () => {
     this.setState({
-      selectedControls: [],
+      selectedControls: []
     });
     this.selectedControlById = {};
   };
 
-  idToLabel = id => id.replace(new RegExp('_', 'g'), ' ');
+  idToLabel = id => id.replace(new RegExp("_", "g"), " ");
+
+  handleMenuClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  handleMenuOpen = e => {
+    this.setState({ anchorEl: e.currentTarget });
+  };
 
   render() {
     const {
@@ -176,43 +195,62 @@ class ControlSettings extends React.Component {
       selectedControls,
       globalControls,
       objectControls,
+      anchorEl
     } = this.state;
     const { show } = this.props;
-    const hidden = show ? '' : 'hidden';
-    const settingsBTN = BTN.Settings(settingsEnabled);
-    const closeBTN = BTN.Close;
+    const hidden = show ? "" : "hidden";
     return (
       <div className="controls-wrapper">
         <div className={`obj-settings ${hidden}`}>
           <div>
-            <i className={settingsBTN} onClick={() => this.toggleSettings()} />
+            <Settings
+              className="iconBtn"
+              onClick={() => this.toggleSettings()}
+            />
             {settingsEnabled && (
-              <SplitButton
-                title="Controls"
-                id="controls-dropdown"
-                onSelect={e => this.handleDropdown(e)}
-              >
-                <MenuItem header>
-                  Global Controls
-                  {this.getSearchBox(SearchInput.GLOBAL_CONTROL_SEARCH)}
-                </MenuItem>
-                {this.getMenuItems(
-                  Object.values(globalControls),
-                  this.state.searchKey[SearchInput.GLOBAL_CONTROL_SEARCH],
-                )}
-                <MenuItem divider />
-                <MenuItem header>
-                  Object Controls
-                  {this.getSearchBox(SearchInput.OBJECT_CONTROL_SEARCH)}
-                </MenuItem>
-                {this.getMenuItems(
-                  Object.values(objectControls),
-                  this.state.searchKey[SearchInput.OBJECT_CONTROL_SEARCH],
-                )}
-              </SplitButton>
+              <React.Fragment>
+                <Button
+                  size="small"
+                  variant="contained"
+                  id="controls-dropdown"
+                  aria-owns={anchorEl ? "simple-menu" : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handleMenuOpen}
+                  className="controlBtn"
+                >
+                  Controls
+                </Button>
+
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={this.handleMenuClose}
+                >
+                  <MenuItem disabled>Global Controls</MenuItem>
+                  <MenuItem disableRipple>
+                    {this.getSearchBox(SearchInput.GLOBAL_CONTROL_SEARCH)}
+                  </MenuItem>
+                  {this.getMenuItems(
+                    Object.values(globalControls),
+                    this.state.searchKey[SearchInput.GLOBAL_CONTROL_SEARCH]
+                  )}
+                  <MenuItem disabled>Object Controls</MenuItem>
+                  <MenuItem disableRipple>
+                    {this.getSearchBox(SearchInput.OBJECT_CONTROL_SEARCH)}
+                  </MenuItem>
+                  {this.getMenuItems(
+                    Object.values(objectControls),
+                    this.state.searchKey[SearchInput.OBJECT_CONTROL_SEARCH]
+                  )}
+                </Menu>
+              </React.Fragment>
             )}
             {settingsEnabled && selectedControls.length > 0 && (
-              <i className={`${closeBTN} close-icon`} onClick={this.clearAll} />
+              <Close
+                className={`close-icon clickable-item`}
+                onClick={this.clearAll}
+              />
             )}
           </div>
         </div>

@@ -1,30 +1,30 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import { Home } from '@material-ui/icons';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import { Home } from "@material-ui/icons";
 
-import MessagePane from './MessagePane';
-import ViewButtonsPanel from './ViewButtonsPanel';
-import './index.css';
-// import ControlSettings from './ControlSettings';
-import SpeakButton from './SpeakButton';
-import HideLayerButton from './HideLayerButton';
-import FooterPanel from './FooterPanel';
-import { EventEmitter, EventName } from '../';
+import MessagePane from "./MessagePane";
+import ViewButtonsPanel from "./ViewButtonsPanel";
+import "./index.css";
+import ControlSettings from "./ControlSettings";
+import SpeakButton from "./SpeakButton";
+import HideLayerButton from "./HideLayerButton";
+import FooterPanel from "./FooterPanel";
+import { EventEmitter, EventName } from "../";
 
 class Overlay extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: true,
+      show: true
     };
 
     EventEmitter.on(
       EventName.SwitchControlLayerVisibility,
-      this.switchVisibility,
+      this.switchVisibility
     );
   }
 
-  switchVisibility = (obj) => {
+  switchVisibility = obj => {
     if (obj && obj.show) {
       this.setState({ show: obj.show });
     } else {
@@ -33,7 +33,7 @@ class Overlay extends React.Component {
   };
 
   displayLoader() {
-    const displayMsg = 'Building it...';
+    const displayMsg = "Building it...";
     return (
       <div className="loader">
         {this.props.loading ? (
@@ -51,7 +51,7 @@ class Overlay extends React.Component {
     return (
       <div className="overlay-layer unselectable">
         <HideLayerButton active={show} />
-        { /* <ControlSettings show={show} /> */}
+        <ControlSettings show={show} />
         <MessagePane />
         {this.displayLoader()}
         <FooterPanel
@@ -72,8 +72,8 @@ class Overlay extends React.Component {
             // View Buttons Panel
             <ViewButtonsPanel show={show} />,
             // Speak Button
-            show && <SpeakButton />,
-        ]}
+            show && <SpeakButton />
+          ]}
         />
       </div>
     );

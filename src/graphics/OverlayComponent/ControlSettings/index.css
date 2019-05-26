@@ -1,131 +1,147 @@
 .overlay-layer .controls-wrapper {
-    pointer-events: none;
-    position: absolute;
-    left: 0;
-    top: 0;
-    padding-top: 10px;
-    padding-left: 10px;
-    width: 100%;
-    height: 100%;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+  width: 100%;
+  height: 100%;
 }
 
 .overlay-layer .controls-wrapper .dropdown-menu {
-    min-width: 260px;
+  min-width: 260px;
 }
 
-
 .overlay-layer .obj-settings {
-    font-size: 25px;
-    color: #AAA;
-    z-index: 15;
-    padding: 5px 15px;
-    background-color: rgba(0, 0, 0, 0.2);
-    width: fit-content;
-    width: -moz-fit-content;
-    pointer-events: visiblefill;
+  font-size: 25px;
+  color: #aaa;
+  z-index: 15;
+  padding: 5px 15px;
+  background-color: rgba(0, 0, 0, 0.2);
+  width: fit-content;
+  width: -moz-fit-content;
+  pointer-events: visiblefill;
+}
+
+.obj-settings .iconBtn {
+  cursor: pointer;
+}
+
+.obj-settings .controlBtn {
+  vertical-align: top;
+  margin-left: 10px;
 }
 
 .controls-wrapper .close-icon {
-    font-size: 25px;
-    margin-left: 10px;
-    color: #989898;
+  font-size: 25px;
+  margin-left: 10px;
+  color: #989898;
 }
 
 .obj-settings .container {
-    width: 100%;
-    max-width: 100%;
+  width: 100%;
+  max-width: 100%;
 }
 
 .obj-settings .dropdown {
-    margin-left: 10px;
-    color: #FFF;
+  margin-left: 10px;
+  color: #fff;
 }
 
 .obj-settings .dropdown button {
-    background-color: #393e42;
-    color: #FFF;
-    border-radius: 10;
+  background-color: #393e42;
+  color: #fff;
+  border-radius: 10;
 }
 
 .obj-settings .control-item-select {
-    display: inline-block;
+  display: inline-block;
 }
 
 .overlay-layer .control-items-container {
-    max-width: calc(100% - 20px);
-    margin-top: 10px;
-    max-height: calc(100% - 100px);
-    color: #AAA;
-    z-index: 7;
-    overflow: auto;
-    white-space: nowrap;
-    pointer-events: auto;
+  max-width: calc(100% - 20px);
+  margin-top: 10px;
+  max-height: calc(100% - 100px);
+  color: #aaa;
+  z-index: 7;
+  overflow: auto;
+  white-space: nowrap;
+  pointer-events: auto;
 }
 
 .control-items-container .control-items-wrapper {
-    display: inline-block;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.2);
-    opacity: 0.8;
-    max-width: 350px;
-    pointer-events: visiblefill;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    vertical-align: top;
+  display: inline-block;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+  opacity: 0.8;
+  max-width: 350px;
+  pointer-events: visiblefill;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  vertical-align: top;
 }
 
 .control-items-wrapper .control-header {
-    padding-bottom: 15px;
-    font-size: 22px;
-    min-height: 25px;
+  padding-bottom: 15px;
+  font-size: 22px;
+  min-height: 25px;
 }
 
 .control-items-wrapper .control-title {
-    font-size: 15px;
-    color: #adadad;
-    font-weight: 600;
-    letter-spacing: 1px;
+  font-size: 15px;
+  color: #adadad;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
 .control-items-wrapper .control-title hr {
-    margin: 0;
-    padding: 0;
-    border: 1px solid #5d5d5d;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #5d5d5d;
 }
 
 .control-items-wrapper .control-type {
-    font-size: 12px;
-    color: #888;
-    text-align: right;
-    letter-spacing: 3px;
+  font-size: 12px;
+  color: #888;
+  text-align: right;
+  letter-spacing: 3px;
 }
 
 .controls-content {
-    max-height: 150px;
-    overflow-y: auto;
+  max-height: 150px;
+  overflow-y: auto;
 }
 
 .control-items-wrapper .control-item {
-    font-size: 15px;
-    padding: 5px 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 15px;
+  padding: 5px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .control-items-wrapper .control-item .control-name {
-    display: inline-block;
-    padding-right: 10px;
+  display: inline-block;
+  padding-right: 10px;
 }
 
 .control-items-wrapper .control-item .control-btn {
-    font-size: 25px;
-    float: right;
+  font-size: 25px;
+  float: right;
 }
 
 .control-items-wrapper .control-item .control-keys {
-    margin-right: 10px;
-    display: inline-block;
-    padding: 5px 9px;
-    font-size: 12px;
-    background-color: rgba(1, 1, 1, 0.7);
-    border-radius: 5px;
+  margin-right: 10px;
+  display: inline-block;
+  padding: 5px 9px;
+  font-size: 12px;
+  background-color: rgba(1, 1, 1, 0.7);
+  border-radius: 5px;
+}
+
+.pull-right {
+  float: right;
+}
+
+.clickable-item {
+  cursor: pointer;
 }

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
-import SampleViewList from '../../../SampleViews/config';
-import RouteSwitcher from '../../utilities/RouteSwitcher';
-import './index.css';
+import SampleViewList from "../../../SampleViews/config";
+import RouteSwitcher from "../../utilities/RouteSwitcher";
+import "./index.css";
 
 export default ({ Navigate, history }) => {
   useEffect(() => {
@@ -10,6 +10,7 @@ export default ({ Navigate, history }) => {
   }, []);
   return (
     <div className="home-wrapper">
+      <div className="blue-eye-title">BlueEYE</div>
       <div className="home-thumbnails">
         {SampleViewList.map((sampleView, i) => (
           <div
@@ -19,17 +20,16 @@ export default ({ Navigate, history }) => {
             onKeyDown={null}
             className="home-thumbnail"
             onClick={() => {
-            if (Navigate.toPage) {
-              Navigate.toPage(i);
-            }
-          }}
+              if (Navigate.toPage) {
+                Navigate.toPage(i);
+              }
+            }}
           >
             <h3>{sampleView.name}</h3>
             <p>{sampleView.description}</p>
           </div>
-      ))}
+        ))}
       </div>
     </div>
   );
 };
-

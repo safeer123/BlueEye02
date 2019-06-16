@@ -48,12 +48,13 @@ class ControlMenu extends React.Component {
     const { enabled } = selectedControl;
     const closeBTN = BTN.Close;
     const ToggleBTN = enabled ? ToggleOn : ToggleOff;
+    const ToggleBTNClass = enabled ? "toggle-on" : "toggle-off";
     const disabledClass = enabled ? "" : "disabled";
     return (
       <div className="control-items-wrapper">
         <div className="control-header">
           <ToggleBTN
-            className={`pull-left clickable-item`}
+            className={`pull-left clickable-item ${ToggleBTNClass}`}
             onClick={this.toggleEnable}
           />
           <Close

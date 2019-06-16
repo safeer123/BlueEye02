@@ -226,6 +226,7 @@ class ControlSettings extends React.Component {
                   anchorEl={anchorEl}
                   open={Boolean(anchorEl)}
                   onClose={this.handleMenuClose}
+                  classes={{ paper: "controls-dropdown" }}
                 >
                   <MenuItem disabled>Global Controls</MenuItem>
                   <MenuItem disableRipple>

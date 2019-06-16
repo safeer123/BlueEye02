@@ -7,6 +7,7 @@
   padding-left: 10px;
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
 }
 
 .overlay-layer .controls-wrapper .dropdown-menu {
@@ -17,7 +18,7 @@
   font-size: 25px;
   color: #aaa;
   z-index: 15;
-  padding: 5px 15px;
+  padding: 10px 10px;
   background-color: rgba(0, 0, 0, 0.2);
   width: fit-content;
   width: -moz-fit-content;
@@ -31,6 +32,10 @@
 .obj-settings .controlBtn {
   vertical-align: top;
   margin-left: 10px;
+}
+
+.controls-dropdown {
+  min-width: 280px !important;
 }
 
 .controls-wrapper .close-icon {
@@ -116,7 +121,7 @@
 .control-items-wrapper .control-item {
   font-size: 15px;
   padding: 5px 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(230, 230, 230, 0.2);
 }
 
 .control-items-wrapper .control-item .control-name {
@@ -144,4 +149,13 @@
 
 .clickable-item {
   cursor: pointer;
+}
+
+.toggle-on,
+.toggle-off {
+  font-size: 35px !important;
+}
+
+.toggle-on {
+  color: #72ce72;
 }

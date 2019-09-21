@@ -75,8 +75,22 @@ const VoiceCmdsTurn = (turnLeftRight, turnUpDown) => [
 
 const VoiceCmdsWalk = slowWalk => [
   {
-    keys: ["walk", "by"],
-    match: ["walk", "by", Distance],
+    keys: ["fly"],
+    match: ["fly"],
+    action: params => {
+      slowWalk(10, +1);
+    }
+  },
+  {
+    keys: ["fly"],
+    match: ["fly", "backwards"],
+    action: params => {
+      slowWalk(10, -1);
+    }
+  },
+  {
+    keys: ["fly", "by"],
+    match: ["fly", "by", Distance],
     action: params => {
       const { distance } = params;
       const dir = dirSign("forwards");
@@ -84,8 +98,8 @@ const VoiceCmdsWalk = slowWalk => [
     }
   },
   {
-    keys: ["walk", "by"],
-    match: ["walk", "backwards", "by", Distance],
+    keys: ["fly", "by"],
+    match: ["fly", "backwards", "by", Distance],
     action: params => {
       const { distance } = params;
       const dir = dirSign("backwards");

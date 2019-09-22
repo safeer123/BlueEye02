@@ -169,6 +169,22 @@ const commonConfig = () => ({
         from: `${__dirname}/public/_redirects`,
         to: `${__dirname}/dist/`,
       },
+      {
+        from: `${__dirname}/public/service-worker.js`,
+        to: `${__dirname}/dist/`,
+      },
+      {
+        from: `${__dirname}/public/manifest.json`,
+        to: `${__dirname}/dist/`,
+      },
+      {
+        from: `${__dirname}/public/icon192.png`,
+        to: `${__dirname}/dist/`,
+      },
+      {
+        from: `${__dirname}/public/icon512.png`,
+        to: `${__dirname}/dist/`,
+      },
     ]),
     new CleanWebpackPlugin(['dist'], {
       root: path.resolve(__dirname),

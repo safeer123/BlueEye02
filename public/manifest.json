@@ -1,6 +1,7 @@
 {
-    "short_name": "BlueEYE02",
-    "name": "BlueEYE v2 Web App",
+    "short_name": "BE02",
+    "name": "BlueEYE02",
+    "description": "BlueEYE v2 Web App",
     "icons": [
       {
         "src":"icon192.png",
@@ -13,7 +14,7 @@
         "type": "image/png"
       }
     ],
-    "start_url": "/sample/1",
+    "start_url": "/sample/1/?mode=fullscreen",
     "background_color": "#222",
     "theme_color": "#222",
     "display": "fullscreen",

@@ -185,6 +185,10 @@ const commonConfig = () => ({
         from: `${__dirname}/public/icon512.png`,
         to: `${__dirname}/dist/`,
       },
+      {
+        from: `${__dirname}/public/fav.ico`,
+        to: `${__dirname}/dist/`,
+      },
     ]),
     new CleanWebpackPlugin(['dist'], {
       root: path.resolve(__dirname),

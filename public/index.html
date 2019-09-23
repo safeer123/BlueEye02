@@ -15,25 +15,25 @@
     <!-- Make sure theme-color is defined -->
     <meta name="theme-color" content="#536878">
 
-    <link rel="shortcut icon" type="image/x-icon" href="/app/assets/images/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/fav.ico">
 
     <style type="text/css">
         body {
           margin: 0;
           padding: 0;
           font-family: sans-serif;
+          
         }
-        .App {
-          text-align: center;
-        }
-        .App-header {
-          background-color: #222;
-          height: 150px;
-          padding: 20px;
+        .App-SplashScreen {
+          display: flex;
+          flex: 1;
+          width: 100%;
+          height: 100%;
+          justify-content: center;
+          align-items: center;
+          background-color: rgb(128, 128, 128);
           color: white;
-        }
-        .App-intro {
-          font-size: large;
+          background: linear-gradient( 315deg, rgb(128, 128, 128) 0%, rgb(90, 90, 90) 50%, rgb(117, 117, 117) 93% );
         }
       </style>
 
@@ -41,13 +41,8 @@
 
 <body>
     <div id="root">
-        <div class="App">
-            <div class="App-header">
-              <h2>Home</h2>
-            </div>
-            <p class="App-intro">
-              Loading site...
-            </p>
+        <div class="App-SplashScreen">
+          <h2>BlueEYE 02</h2>
         </div>
     </div>
 

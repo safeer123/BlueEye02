@@ -3,17 +3,17 @@
 const doCache = true;
 
 // Name our cache
-const CACHE_NAME = 'my-pwa-cache-v1';
+const CACHE_NAME = 'blueeye02-pwa-cache-v1';
 
 // Files to save in cache
 const urlsToCache = [
   '/',
   'https://fonts.googleapis.com/css?family=Roboto:200,300,400,500,700', // caching 3rd party content
-  '/app/assets/images/favicon.ico',
   'assets/images/open-sans-v14-latin-regular.svg',
   '/_redirects',
   '/icon192.png',
   '/icon512.png',
+  '/fav.ico',
   '/main.css',
   '/manifest.json',
 ];

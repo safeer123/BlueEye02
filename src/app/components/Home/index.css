@@ -14,7 +14,7 @@
 }
 
 .home-thumbnails {
-  padding: 20px;
+  padding: 10px;
   overflow-y: auto;
   height: calc(100% - 150px);
 }
@@ -22,21 +22,28 @@
 .home-thumbnails .home-thumbnail {
   display: inline-block;
   cursor: pointer;
-  padding: 10px 25px;
+  padding: 0px 25px;
   margin: 10px;
-  background-color: rgb(169, 175, 177);
+  background-color: #a9afb1;
   border: 1px solid #bdbdbd;
   border-radius: 10px;
   user-select: none;
-  max-width: 220px;
-  height: 210px;
+  width: 80%;
   vertical-align: top;
-  -webkit-box-shadow: 1px -1px 24px -1px rgba(0, 0, 0, 0.8);
-  box-shadow: 1px -1px 24px -1px rgba(0, 0, 0, 0.8);
+  -webkit-box-shadow: 1px -1px 24px -1px rgba(0,0,0,.8);
+  box-shadow: 1px -1px 24px -1px rgba(0,0,0,.8);
 }
 
 .home-thumbnails .home-thumbnail:hover {
   background-color: rgb(159, 174, 180);
+}
+
+.home-thumbnails .home-thumbnail h3 {
+  margin: 5px;
+}
+
+.home-thumbnails .home-thumbnail p {
+  margin: 5px;
 }
 
 .home-wrapper .title-area {

@@ -18,7 +18,6 @@
   font-size: 25px;
   color: #aaa;
   z-index: 15;
-  padding: 10px 10px;
   background-color: rgba(0, 0, 0, 0.2);
   width: fit-content;
   width: -moz-fit-content;
@@ -31,7 +30,6 @@
 
 .obj-settings .controlBtn {
   vertical-align: top;
-  margin-left: 10px;
 }
 
 .controls-dropdown {

@@ -2,8 +2,8 @@ import {
   SplitScreenCanvasView,
   Scene,
   EventEmitter,
-  EventName
-} from "../../graphics";
+  EventName,
+} from '../../graphics';
 
 // TwoEyesView Layer
 export default class TwoEyesView extends SplitScreenCanvasView {
@@ -12,42 +12,45 @@ export default class TwoEyesView extends SplitScreenCanvasView {
     this.canvas = canvas;
   }
 
-  switchPairMode = mode => {
+  switchPairMode = (mode) => {
     EventEmitter.emit(EventName.TogglePairMode, { mode });
   };
 
   onEnter() {
     const {
-      nodeObj: { twoEyes }
+      nodeObj: { twoEyes },
     } = this.sceneData;
     this.switchPairMode(true);
     EventEmitter.emit(EventName.ToggleControlEnableFlag, {
       id: twoEyes.Id,
-      flag: true
+      flag: true,
+    });
+    EventEmitter.emit(EventName.SwitchControlLayerVisibility, {
+      show: false,
     });
   }
 
   onExit() {
     const {
-      nodeObj: { twoEyes }
+      nodeObj: { twoEyes },
     } = this.sceneData;
     this.switchPairMode(false);
     EventEmitter.emit(EventName.ToggleControlEnableFlag, {
       id: twoEyes.Id,
-      flag: false
+      flag: false,
     });
   }
 
   createScene() {
     const {
       nodeObj: { nodes, twoEyes, initScene },
-      sceneSetters
+      sceneSetters,
     } = this.sceneData;
     // Define left scene and right scene
-    const leftScene = new Scene("LEFT_EYE_SCENE");
+    const leftScene = new Scene('LEFT_EYE_SCENE');
     leftScene.setNodeList(nodes);
     leftScene.setSceneSetters(sceneSetters);
-    const rightScene = leftScene.clone("RIGHT_EYE_SCENE");
+    const rightScene = leftScene.clone('RIGHT_EYE_SCENE');
 
     // Set active camera Ids
     const leftCamId = twoEyes.getLeftCamId();

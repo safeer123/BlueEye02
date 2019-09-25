@@ -69,7 +69,7 @@ class ViewPage extends React.Component {
   }
 
   handleFullscreenSwitch({ flag = null }) {
-    if (window.matchMedia('(mode: fullscreen)').matches) {
+    if (window.matchMedia('(display-mode: fullscreen)').matches) {
       alert('Already in fullscreen');
       return;
     }

@@ -186,7 +186,7 @@ const commonConfig = () => ({
         to: `${__dirname}/dist/`,
       },
       {
-        from: `${__dirname}/public/fav.ico`,
+        from: `${__dirname}/public/favicon.ico`,
         to: `${__dirname}/dist/`,
       },
     ]),

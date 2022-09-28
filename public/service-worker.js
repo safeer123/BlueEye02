@@ -13,7 +13,7 @@ const urlsToCache = [
   '/_redirects',
   '/icon192.png',
   '/icon512.png',
-  '/fav.ico',
+  '/favicon.ico',
   '/main.css',
   '/manifest.json',
 ];

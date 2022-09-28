@@ -25,9 +25,6 @@ export default class TwoEyesView extends SplitScreenCanvasView {
       id: twoEyes.Id,
       flag: true,
     });
-    EventEmitter.emit(EventName.SwitchControlLayerVisibility, {
-      show: false,
-    });
   }
 
   onExit() {

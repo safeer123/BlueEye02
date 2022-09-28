@@ -20,7 +20,7 @@ export default ({ Navigate, history }) => {
       <div className="title-area">
         <div className="blue-eye-title">
           <img src="/icon512.png" alt="logo" />
-          <span>BlueEYE v2</span>
+          <span>BlueEYE</span>
         </div>
       </div>
       <div className="home-thumbnails">
@@ -37,8 +37,13 @@ export default ({ Navigate, history }) => {
                 }
               }}
             >
-              <h3>{sampleView.name}</h3>
-              <p>{sampleView.description}</p>
+              <div className="home-thumbnail-img">
+                <img src={sampleView.imgSrc} />
+              </div>
+              <div className="home-thumbnail-descr">
+                <h3>{sampleView.name}</h3>
+                <p>{sampleView.description}</p>
+              </div>
             </div>
           </Fade>
         ))}
